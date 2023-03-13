@@ -16,5 +16,19 @@ int key_pressed(int keycode, t_data *data)
 		free(data);
 		exit(0);
 	}
+	if (keycode == 97 || keycode == 65361)
+	{
+		if (data->player->velocity > 0)
+			data->player->velocity = -0.5;
+		else
+			data->player->velocity -= 0.1;
+	}
+	if (keycode == 100 || keycode == 65363)
+	{
+		if (data->player->velocity < 0)
+			data->player->velocity = 0.5;
+		else
+			data->player->velocity += 0.1;
+	}
 	return (0);
 }

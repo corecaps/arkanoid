@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -g -c
 INC = -Iminilibx-linux/
 LINK = -Lminilibx-linux -lmlx -lXext -lX11 -lm -lz
 
-SRC = main.c render.c hooks.c
+SRC = main.c render.c hooks.c graphic_utils.c
 OBJ = $(SRC:.c=.o)
 RM = rm -f
 

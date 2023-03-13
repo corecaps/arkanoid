@@ -46,6 +46,11 @@ typedef struct s_brick
 	t_color	color;
 	int		resistance;
 }t_brick;
+typedef struct s_brick_list
+{
+	t_brick brick;
+	struct s_brick_list *next;
+} t_brick_list;
 typedef struct s_hitbox
 {
 	double start_x;
@@ -83,7 +88,7 @@ typedef struct s_data
 	void	*mlx;
 	void	*mlx_win;
 	t_buffer	*img_buffer;
-	t_brick		**bricks;
+	t_brick_list	*bricks;
 	t_player	*player;
 	t_ball		*ball;
 	t_hitbox	brick_hitbox;
@@ -92,4 +97,9 @@ typedef struct s_data
 } t_data;
 int		render(t_data *data);
 int		key_pressed(int keycode, t_data *data);
+int		my_mlx_pixel_put(t_buffer *data, int x, int y, t_color color);
+void	draw_brick(t_brick *brick, t_buffer *buffer);
+void	draw_player(t_player *player, t_buffer *buffer);
+void	draw_ball(t_ball *ball, t_buffer *buffer);
+void	clear_buffer(t_data *data);
 #endif
