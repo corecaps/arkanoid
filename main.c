@@ -34,7 +34,7 @@ int main(void)
 	data->player = malloc(sizeof (t_player));
 	data->player->pos.x = 400;
 	data->player->pos.y = 550;
-	data->player->width = 100;
+	data->player->width = 180;
 	data->player->height = 20;
 	data->player->velocity = 0.5;
 	data->player->score = 42;
@@ -52,12 +52,12 @@ int main(void)
 	t_brick_list *cursor = data->bricks;
 	for (int j = 0; j < 8;j++)
 	{
-		for (int i = 0; i < (j * 2) + 1; i++)
+		for (int i = 0; i < (j * 2) + 3; i++)
 		{
-			cursor->brick.start.x = i * (800 / ((j * 2) + 1));
-			cursor->brick.start.y = j * 20 + 50;
-			cursor->brick.width = 800 / ((j * 2) + 1) - 2;
-			cursor->brick.height = 19;
+			cursor->brick.start.x = i * (800 / ((j * 2) + 3));
+			cursor->brick.start.y = (j * 20) + 150 + (j * 4);
+			cursor->brick.width = 800 / ((j * 2) + 3) - (j + 1);
+			cursor->brick.height = 17;
 			cursor->brick.color.s_rgb.r = (8 - j) * (255 / 8);
 			cursor->brick.color.s_rgb.g = 0;
 			cursor->brick.color.s_rgb.b = j * (255 / 8);

@@ -6,23 +6,18 @@
 
 int render(t_data *data)
 {
-//	mlx_clear_window(data->mlx, data->mlx_win);
 	clear_buffer(data);
 	data->player->pos.x += data->player->velocity;
 	if (data->player->pos.x + data->player->width > 800 || data->player->pos.x < 0)
 		data->player->velocity = data->player->velocity * -1;
-
 	float distance_threshold = 0.1;
-
-// Calculate the ball's movement vector
+	// Calculate the ball's movement vector
 	t_point vector = { sin(data->ball->angle) * data->ball->velocity,
 					   cos(data->ball->angle) * data->ball->velocity };
-
-// Move the ball
+	// Move the ball
 	float distance_moved = sqrt(pow(vector.x, 2) + pow(vector.y, 2));
 	data->ball->pos.x += vector.x;
 	data->ball->pos.y += vector.y;
-
 	t_brick_list *cursor = data->bricks;
 	data->brick_hitbox.start_x = cursor->brick.start.x;
 	data->brick_hitbox.start_y = cursor->brick.start.y;
@@ -93,6 +88,8 @@ int render(t_data *data)
 					{
 						data->player->score *= 1.5;
 						data->player->score += 42;
+						if (data->player->width > 50)
+							data->player->width -= 2;
 						// Remove brick from list
 						if (data->bricks == curr_brick)
 						{
@@ -127,7 +124,7 @@ int render(t_data *data)
 						// Ball hit brick from top/bottom
 						data->ball->angle = 2 * M_PI - data->ball->angle;
 					}
-					data->ball->velocity += 0.01;
+					data->ball->velocity += 0.05;
 					break;
 				}
 				else
@@ -169,6 +166,17 @@ int render(t_data *data)
 		draw_brick(&cursor->brick,data->img_buffer);
 		cursor = cursor->next;
 	}
+	t_color white = {0xFFFFFF};
+
+	for (int x = 0; x < 800; x++)
+	{
+		if (data->ball->pos.y + data->ball->radius >= 580)
+		{
+			white.s_rgb.g = 0;
+			white.s_rgb.b = 0;
+		}
+		my_mlx_pixel_put(data->img_buffer, x, 580,white);
+	}
 	draw_player(data->player,data->img_buffer);
 	draw_ball(data->ball,data->img_buffer);
 	mlx_put_image_to_window(data->mlx,
@@ -176,9 +184,9 @@ int render(t_data *data)
 							data->img_buffer->img,
 							0 ,0);
 //	printf("Brick hit box (%f,%f) (%f,%f)\n", data->brick_hitbox.start_x, data->brick_hitbox.start_y, data->brick_hitbox.end_x, data->brick_hitbox.end_y);
-//	char *str = malloc(sizeof(char) * 100);
-//	sprintf(str,"Angle: %f Vector x %f Vector y %f\n", (float)data->ball->angle / M_PI * 180, vector.x, vector.y);
-//	mlx_string_put(data->mlx, data->mlx_win, 100, 200, 0xFFFFFF, str);
-//	free(str);
+	char *str = malloc(sizeof(char) * 100);
+	sprintf(str,"42NOID SCORE : %d", data->player->score);
+	mlx_string_put(data->mlx, data->mlx_win, 350, 10, 0xFF0000, str);
+	free(str);
 	return (0);
 }
